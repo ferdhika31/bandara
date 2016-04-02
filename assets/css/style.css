@@ -1,0 +1,12 @@
+/* 
+* @Author: Dika
+* @Date:   2016-03-31 13:04:32
+* @Last Modified by:   Dika
+* @Last Modified time: 2016-03-31 13:05:29
+*/
+
+.btn-primary:focus{
+    color: #ffffff;
+    background-color: #EF5F5A;
+    border-color: #EF5F5A;
+}
