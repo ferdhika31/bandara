@@ -17,6 +17,7 @@ class Main extends CI_Controller {
 		$this->global_data = array();
 
 		$this->global_data['asset'] = base_url('asset');
+		$this->config->load('website');
 	}
 
 

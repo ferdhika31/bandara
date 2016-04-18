@@ -45,12 +45,14 @@ class M_auth extends CI_Model {
 
 		for($row = $startRow; $row <= $highestRow; $row++){
 			$rowData = $sheet->rangeToArray('A' . $row . ':' . $highestColumn . $row,NULL,TRUE,FALSE);
-			$isiData[] = array(
-				'username'		=> $rowData[0][0],
-				'password'		=> $rowData[0][1],
-				'nama'			=> $rowData[0][2],
-				'hak'			=> $rowData[0][3]
-			);
+			if(!empty($rowData[0][0])){
+				$isiData[] = array(
+					'username'		=> $rowData[0][0],
+					'password'		=> $rowData[0][1],
+					'nama'			=> $rowData[0][2],
+					'hak'			=> $rowData[0][3]
+				);
+			}	
 		}
 
 		return $isiData;

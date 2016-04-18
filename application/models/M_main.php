@@ -42,23 +42,27 @@ class M_main extends CI_Model {
 		$highestColumn = $sheet->getHighestColumn();
 
 		$isiData = array();
+		$index = $startRow;
 
 		for($row = $startRow; $row <= $highestRow; $row++){
 			$rowData = $sheet->rangeToArray('A' . $row . ':' . $highestColumn . $row,NULL,TRUE,FALSE);
-			$isiData[] = array(
-				'kode_pesawat'	=> $rowData[0][0],
-				'tujuan'		=> $rowData[0][1],
-				'waktu'			=> $rowData[0][2],
-				'desk'			=> $rowData[0][3],
-				'keterangan'	=> $rowData[0][4],
-			);
+			if(!empty($rowData[0][0])){
+				$isiData[] = array(
+					'index'			=> $index,
+					'kode_pesawat'	=> $rowData[0][0],
+					'tujuan'		=> $rowData[0][1],
+					'waktu'			=> $rowData[0][2],
+					'desk'			=> $rowData[0][3],
+					'keterangan'	=> $rowData[0][4],
+				);
+			}
+			$index++;
 		}
 
 		return $isiData;
 	}
 
 	/* Pesawat */
-
 	public function tampilPesawat(){
 		// Baris dibaca
 		$startRow = 2;
@@ -79,12 +83,15 @@ class M_main extends CI_Model {
 
 		for($row = $startRow; $row <= $highestRow; $row++){
 			$rowData = $sheet->rangeToArray('A' . $row . ':' . $highestColumn . $row,NULL,TRUE,FALSE);
-			$isiData[] = array(
-				'kode_pesawat'		=> $rowData[0][0],
-				'nama_maskapai'		=> $rowData[0][1],
-				'image'				=> base_url('assets/pesawat/'.$rowData[0][2]),
-				'status'			=> $rowData[0][3]
-			);
+			// pesawat yang aktif
+			if(!empty($rowData[0][0]) && $rowData[0][3]=='aktif'){
+				$isiData[] = array(
+					'kode_pesawat'		=> $rowData[0][0],
+					'nama_maskapai'		=> $rowData[0][1],
+					'image'				=> base_url('assets/pesawat/'.$rowData[0][2]),
+					'status'			=> $rowData[0][3]
+				);
+			}
 		}
 
 		return $isiData;

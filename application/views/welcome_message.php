@@ -18,13 +18,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									<th>REMARK</th>
 								</tr>
 							</thead>
-							<tbody>
+							<tbody class="isi">
+								<tr></tr>
+								<!-- 
 							<?php
 							foreach ($daftar as $res):
 							?>
 								<tr>
 									<td>
-										<!-- <img height="60" src="assets/img/pesawat/garuda.jpg"> -->
+										
 										<?= $res['nama_maskapai'];?>
 									</td>
 									<td><?= $res['kode_pesawat'];?></td>
@@ -35,12 +37,38 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								</tr>
 							<?php
 							endforeach;
-							?>
+							?> -->
 							</tbody>
 						</table>
 					</div>
 				</div>
+				<!-- <button onclick="cek()">Cek</button> -->
 			</article>
 		</div>
 	</div>
 </div>
+<script src="<?php echo base_url('assets/admin/js/jquery-1.11.0.min.js');?>" type="text/javascript"></script>
+<script type="text/javascript">
+	setInterval(cek, 1000);
+
+	// function mundur(){
+	// 	//todo
+	// }
+	function cek(){
+		$.get("<?php echo site_url('welcome/data');?>", function(data){
+			// console.log(data.length);
+			$(".isi tr").remove();
+			if(data.length>0){
+				for (var i = data.length - 1; i >= 0; i--) {
+					$(".isi").prepend("<tr><td>"+data[i].nama_maskapai+"</td><td>"+data[i].kode_pesawat+"</td><td>"+data[i].tujuan+"</td><td>"+data[i].waktu+"</td><td></td><td>"+data[i].keterangan+"</td></tr>");
+				};
+			}else{
+				$(".isi").prepend("<tr><td colspan='6'>Tidak ada jadwal</td></tr>");
+			}
+		}, "json" );
+	}
+
+	
+
+	
+</script>

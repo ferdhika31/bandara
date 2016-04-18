@@ -18,6 +18,8 @@ class Main extends CI_Controller {
 			'm_admin'
 		));
 
+		$this->config->load('website');
+
 		// Deklarasi
 		$this->global_data = array();
 
@@ -28,7 +30,10 @@ class Main extends CI_Controller {
 
 
 	protected function tampilan($view){
+		$this->load->view('header',$this->global_data);
+		$this->load->view('menu',$this->global_data);
 		$this->load->view($view,$this->global_data);
+		$this->load->view('footer',$this->global_data);
 	} 
 
 }

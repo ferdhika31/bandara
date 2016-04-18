@@ -17,19 +17,23 @@ class Admin extends Main{
 		if(!$this->session->userdata('isLogin')){
 			redirect('auth');
 		}
-		// Hak akses user
-		if($this->session->userdata('hak')=='operator'){
-			redirect('operator');
-		}
+
+		$this->load->model('m_main');
 	}
 
 	public function index(){
-		// Title
+		// Title & desc
 		$this->global_data['title'] = "Dashboard";
+		$this->global_data['description'] = "dashboard";
+		$this->global_data['menu'] = "dashboard";
 
 		$this->global_data['listUser'] = $this->m_auth->tampilUser();
+		$this->global_data['listPesawat'] = $this->m_admin->tampilPesawat();
+		$this->global_data['inbox'] = $this->m_admin->ambilPesanBy('inbox',$this->session->userdata('uname'));
 
-		$this->tampilan('user/list');
+		$this->global_data['jadwal'] = $this->m_main->tampilJadwal();
+
+		$this->tampilan('dashboard');
 	}
 
 	public function keluar(){

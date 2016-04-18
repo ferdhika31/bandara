@@ -36,19 +36,76 @@ class Welcome extends Main {
 			$kode_pesawat = $res['kode_pesawat'];
 
 			$maskapai = $this->m_main->tampilSatuPesawat($kode_pesawat);
-
-			$resData[] = array(
-				'kode_pesawat'	=> $kode_pesawat,
-				'nama_maskapai' => $maskapai['nama_maskapai'],
-				'tujuan'		=> $res['tujuan'],
-				'waktu'			=> $res['waktu'],
-				'desk'			=> $res['desk'],
-				'keterangan'	=> $res['keterangan'],
-			);
+			if($maskapai){
+				$resData[] = array(
+					'kode_pesawat'	=> $kode_pesawat,
+					'nama_maskapai' => $maskapai['nama_maskapai'],
+					'tujuan'		=> $res['tujuan'],
+					'waktu'			=> $res['waktu'],
+					'desk'			=> $res['desk'],
+					'keterangan'	=> $res['keterangan'],
+				);
+			}
 		}
-
+		
 		$this->global_data['daftar'] = $resData;
 
 		$this->tampilan('welcome_message');
+	}
+
+	public function data(){
+		$data = $this->m_main->tampilJadwal();
+
+		$resData = array();
+
+		foreach ($data as $res) {
+			$kode_pesawat = $res['kode_pesawat'];
+
+			$maskapai = $this->m_main->tampilSatuPesawat($kode_pesawat);
+			if($maskapai){
+				$waktu = $res['waktu'];
+
+				$datetime1 = strtotime(date("H:i"));
+				$datetime2 = strtotime($waktu);
+
+				$interval  = abs($datetime2 - $datetime1);
+				$minutes   = round($interval / 60);
+
+				echo 'Diff. in minutes is: '.$minutes.'<br>'; 
+				// $datetime1<=$datetime2 || 
+				if($datetime1<=$datetime2 && $minutes<=30){
+					// echo $maskapai['nama_maskapai']." - ".$waktu.'-'.$minutes."<br>";
+					$resData[] = array(
+						'kode_pesawat'	=> $kode_pesawat,
+						'nama_maskapai' => $maskapai['nama_maskapai'],
+						'tujuan'		=> $res['tujuan'],
+						'waktu'			=> $waktu,
+						'desk'			=> $res['desk'],
+						'keterangan'	=> $res['keterangan'],
+					);
+				}
+			}
+		}
+
+		echo json_encode($resData);
+	}
+
+	public function getSelisih(){
+		@$waktu = $this->input->get("waktu");
+
+		$datetime1 = strtotime(date("H:i"));
+		$datetime2 = strtotime($waktu);
+
+		$interval  = abs($datetime2 - $datetime1);
+		$minutes   = round($interval / 60);
+		// echo 'Diff. in minutes is: '.$minutes; 
+
+		$json = array('stt'=>false);
+
+		if($datetime1<=$datetime2 || $minutes<=30){
+			$json = array('stt'=>true);
+		}
+
+		echo json_encode($json);
 	}
 }

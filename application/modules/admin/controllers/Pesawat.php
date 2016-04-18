@@ -18,9 +18,9 @@ class Pesawat extends Main{
 			redirect('auth');
 		}
 		// Hak akses user
-		if($this->session->userdata('hak')=='operator'){
-			redirect('operator');
-		}
+		// if($this->session->userdata('hak')=='operator'){
+		// 	redirect('operator');
+		// }
 
 		$this->load->library('form_validation');
 	}
@@ -28,18 +28,26 @@ class Pesawat extends Main{
 	public function index(){
 		// Title
 		$this->global_data['title'] = "Pesawat";
+		$this->global_data['description'] = "Data Pesawat";
+		$this->global_data['menu'] = "list_pesawat";
 
 		// Pesan
 		$this->global_data['message'] = $this->session->flashdata('message');
 
 		$this->global_data['list'] = $this->m_admin->tampilPesawat();
 
-		$this->tampilan('pesawat/list');
+		if($this->session->userdata("hak")=='admin'){
+			$this->tampilan('pesawat/list');
+		}else{
+			$this->tampilan('permission');
+		}
 	}
 
 	public function tambah(){
 		// Title
 		$this->global_data['title'] = "Tambah Pesawat";
+		$this->global_data['description'] = "Tambah Pesawat";
+		$this->global_data['menu'] = "tambah_pesawat";
 
 		// Pesan
 		$this->global_data['message'] = $this->session->flashdata('message');
@@ -51,10 +59,10 @@ class Pesawat extends Main{
 		if($this->form_validation->run()){
 			$kode = $this->input->post('A_kode');
 			$nama = $this->input->post('A_nama');
-			$image = $this->input->post('A_image');
-			$status = $this->input->post('A_stt');
+			// $image = $this->input->post('A_image');
+			// $status = $this->input->post('A_stt');
 
-			$this->m_admin->tambahPesawat(array($kode, $nama, $image, $status));
+			$this->m_admin->tambahPesawat(array($kode, $nama, null, 'aktif'));
 			$this->session->set_flashdata('message','Berhasil menambahkan.');
 			redirect("admin/pesawat");
 		}else{
@@ -73,6 +81,8 @@ class Pesawat extends Main{
 
 			// Title
 			$this->global_data['title'] = "Ubah Pesawat ".$dataPesawat['nama_maskapai']."-".$dataPesawat['kode_pesawat'];
+			$this->global_data['description'] = "Ubah Pesawat";
+			$this->global_data['menu'] = "ubah_pesawat";
 
 			// Pesan
 			$this->global_data['message'] = $this->session->flashdata('message');
@@ -89,10 +99,10 @@ class Pesawat extends Main{
 
 				$kode = $this->input->post('A_kode');
 				$nama = $this->input->post('A_nama');
-				$image = $this->input->post('A_image');
-				$status = $this->input->post('A_stt');
+				// $image = $this->input->post('A_image');
+				// $status = $this->input->post('A_stt');
 
-				$this->m_admin->ubahPesawat(array($kode, $nama, $image, $status), $id);
+				$this->m_admin->ubahPesawat(array($kode, $nama, null, 'aktif'), $id);
 				$this->session->set_flashdata('message','Berhasil mengubah data : '.$dataPesawat['nama_maskapai'].'-'.$dataPesawat['kode_pesawat']);
 				redirect("admin/pesawat");
 			}else{
@@ -108,6 +118,9 @@ class Pesawat extends Main{
 		if(!empty($id)){
 			$this->m_admin->hapusPesawat($id);
 			$this->session->set_flashdata('message','Berhasil menghapus.');
+			redirect("admin/pesawat");
+		}else{
+			$this->session->set_flashdata('message','Gagal menghapus.');
 			redirect("admin/pesawat");
 		}
 	}
