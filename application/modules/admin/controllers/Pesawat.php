@@ -62,8 +62,16 @@ class Pesawat extends Main{
 			// $image = $this->input->post('A_image');
 			// $status = $this->input->post('A_stt');
 
-			$this->m_admin->tambahPesawat(array($kode, $nama, null, 'aktif'));
-			$this->session->set_flashdata('message','Berhasil menambahkan.');
+			$cek = $this->m_admin->cariPesawat($kode,$nama);
+
+			if(empty($cek)){
+				$this->m_admin->tambahPesawat(array($kode, $nama, null, 'aktif'));
+				$this->session->set_flashdata('message','Berhasil menambahkan.');
+			}else{
+				$this->session->set_flashdata('message','Pesawat dengan kode '.$kode.'-'.$nama.' sudah ada.');
+			}
+
+			
 			redirect("admin/pesawat");
 		}else{
 			// Pesan validasi

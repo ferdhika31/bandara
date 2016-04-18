@@ -86,7 +86,7 @@
 								</div>
 								<div class="details">
 									<div class="number">
-										<?php echo count($listPesawat);?>
+										<?php echo $jadwal;?>
 									</div>
 									<div class="desc">
 										Jadwal Penerbangan

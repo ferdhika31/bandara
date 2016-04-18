@@ -38,6 +38,10 @@ License: You must have a valid license purchased only from themeforest(the above
 		<link href="<?php echo base_url('assets/admin/admin/layout/css/layout.css');?>" rel="stylesheet" type="text/css"/>
 		<link href="<?php echo base_url('assets/admin/admin/layout/css/themes/default.css');?>" rel="stylesheet" type="text/css" id="style_color"/>
 		<link href="<?php echo base_url('assets/admin/admin/layout/css/custom.css');?>" rel="stylesheet" type="text/css"/>
+
+		<!-- DataTables -->
+	    <link rel="stylesheet" href="<?php echo base_url('assets/admin/plugins/datatables/dataTables.bootstrap.css');?>">
+
 		<!-- END THEME STYLES -->
 		<link rel="shortcut icon" href="<?php echo base_url('assets/img/logo.png');?>"/>
 

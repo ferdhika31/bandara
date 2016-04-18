@@ -40,64 +40,82 @@
 								</div>
 
 								<div class="portlet-body">
-									<div class="table-scrollable">
 
-										<table class="table table-hover">
-											<thead>
-												<tr>
-													<th>No</th>
-													<th>Kode Pesawat</th>
-													<th>Nama Maskapai</th>
-													<th>Tujuan</th>
-													<th>Waktu</th>
-													<th>Aksi</th>
-												</tr>
-											</thead>
-											<tbody>
-											<?php 
+									<div class="box">
+										<div class="box-body">
+											<table id="example2" class="table table-bordered table-hover">
+												<thead>
+													<tr>
+														<th>No</th>
+														<th>Kode Pesawat</th>
+														<th>Nama Maskapai</th>
+														<th>Tujuan</th>
+														<th>Waktu</th>
+														<th>Aksi</th>
+														<?php if($this->session->userdata("hak")=="operator"): ?>
+														<th>Suara</th>
+														<?php endif; ?>
+													</tr>
+												</thead>
 
-											$no=1; 
-											$temp = array();  
-											if(!empty($list)):
-												$pesan = $this->config->item('pesanJadwal');
-												foreach ($list as $jadwal): 
-												$temp[] = array(
-													'index' => $jadwal['index'],
-													'kode' => $jadwal['kode_pesawat'],
-													'nama' => $jadwal['nama_maskapai'],
-													'tujuan' => $jadwal['tujuan'],
-													'waktu' => $jadwal['waktu']
-												);
-											?>
-											<tr>
-												<td><?=$no;?></td>
-												<td><?=$jadwal['kode_pesawat'];?></td>
-												<td><?=$jadwal['nama_maskapai'];?></td>
-												<td><?=$jadwal['tujuan'];?></td>
-												<td><?=$jadwal['waktu'];?></td>
-												<td>
-													<?php if($this->session->userdata("hak")=="admin"): ?>
-													<a href="<?= site_url('admin/jadwal/ubah/'.$jadwal['index']); ?>" class="btn default btn-xs purple">
-														<i class="fa fa-edit"></i> Ubah 
-													</a>
-													<?php else:?>
-														<input onclick='responsiveVoice.speak("<?php echo sprintf($pesan['indonesia'], $jadwal['nama_maskapai'], $jadwal['kode_pesawat']);?>", "Indonesian Female", {volume: 5});' type='button' value='🔊 ID' />
-														| 
-														<input onclick='responsiveVoice.speak("<?php echo sprintf($pesan['inggris'], $jadwal['nama_maskapai'], $jadwal['kode_pesawat']);?>");' type='button' value='🔊 EN' />
-													<?php endif;?>
-													<!-- <a data-toggle="modal" href="#hapus<?php echo $jadwal['index'];?>" class="btn default btn-xs red">
-														<i class="fa fa-trash"></i> Delete 
-													</a> -->
-												</td>
-											</tr>
-												<?php $no++; endforeach; else: ?>
-											<tr>
-												<td colspan="6">Tidak ada data.</td>
-											</tr>
-											<?php endif; ?>
-											</tbody>
-										</table>
+												<tbody>
+													<?php 
+
+													$no=1; 
+													$temp = array();  
+													if(!empty($list)):
+														$pesan = $this->config->item('pesanJadwal');
+														foreach ($list as $jadwal): 
+														$temp[] = array(
+															'index' => $jadwal['index'],
+															'kode' => $jadwal['kode_pesawat'],
+															'nama' => $jadwal['nama_maskapai'],
+															'tujuan' => $jadwal['tujuan'],
+															'waktu' => $jadwal['waktu']
+														);
+													?>
+													<tr>
+														<td><?=$no;?></td>
+														<td><?=$jadwal['kode_pesawat'];?></td>
+														<td><?=$jadwal['nama_maskapai'];?></td>
+														<td><?=$jadwal['tujuan'];?></td>
+														<td><?=$jadwal['waktu'];?></td>
+														<td>
+															<?php if($this->session->userdata("hak")=="admin"): ?>
+															<a href="<?= site_url('admin/jadwal/ubah/'.$jadwal['index']); ?>" class="btn default btn-xs purple">
+																<i class="fa fa-edit"></i> Ubah 
+															</a>
+															<?php else:?>
+																<select class="form-control" name="A_ket">
+																	<?php
+																		$keterangan = $this->config->item('keterangan');
+																		foreach ($keterangan as $keterangan):
+																	?>
+																	<option value="<?php echo $keterangan;?>" <?php echo (!empty($data['keterangan'])) ? ($keterangan==$data['keterangan']) ? 'selected' : '' : '';?>><?php echo $keterangan;?></option>
+																	<?php endforeach;?>
+																</select>
+															<?php endif;?>
+															<!-- <a data-toggle="modal" href="#hapus<?php echo $jadwal['index'];?>" class="btn default btn-xs red">
+																<i class="fa fa-trash"></i> Delete 
+															</a> -->
+														</td>
+														<?php if($this->session->userdata("hak")=="operator"): ?>
+														<td>
+															<button class="btn default btn-xs red" onclick='responsiveVoice.speak("<?php echo sprintf($pesan['indonesia'], $jadwal['nama_maskapai'], $jadwal['kode_pesawat']);?>", "Indonesian Female", {volume: 5});'><i class="fa fa-volume-up"></i> ID</button>
+															<button class="btn default btn-xs red" onclick='responsiveVoice.speak("<?php echo sprintf($pesan['inggris'], $jadwal['nama_maskapai'], $jadwal['kode_pesawat']);?>");' ><i class="fa fa-volume-up"></i> EN</button>
+														</td>
+														<?php endif; ?>
+													</tr>
+														<?php $no++; endforeach; else: ?>
+													<tr>
+														<td colspan="6">Tidak ada data.</td>
+													</tr>
+													<?php endif; ?>
+												</tbody>
+											</table>
+										</div>
 									</div>
+
 									<?php if($this->session->userdata("hak")=="admin"):?>
 									<center>
 										<a class="btn default green" href="<?php echo site_url('admin/jadwal/tambah');?>">

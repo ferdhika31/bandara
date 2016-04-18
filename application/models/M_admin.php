@@ -66,6 +66,38 @@ class M_admin extends CI_Model {
 		return $isiData;
 	}
 
+	public function cariPesawat($kode_pesawat=null,$nama_maskapai=null){
+		// Baris dibaca
+		$startRow = 2;
+
+		$this->bukaFile();
+
+		$sheet = $this->objPHPExcel->getSheet($this->tb_pesawat);
+		$highestRow = $sheet->getHighestRow();
+		$highestColumn = $sheet->getHighestColumn();
+
+		$isiData = array();
+		$index = $startRow;
+
+		for($row = $startRow; $row <= $highestRow; $row++){
+			$rowData = $sheet->rangeToArray('A' . $row . ':' . $highestColumn . $row,NULL,TRUE,FALSE);
+			if(!empty($rowData[0][0])){
+				if($kode_pesawat==$rowData[0][0] && $nama_maskapai==$rowData[0][1]){
+					$isiData[] = array(
+						'index'				=> $index,
+						'kode_pesawat'		=> $rowData[0][0],
+						'nama_maskapai'		=> $rowData[0][1],
+						'image'				=> $rowData[0][2],
+						'status'			=> $rowData[0][3]
+					);
+				}
+			}
+			$index++;
+		}
+
+		return $isiData;
+	}
+
 	public function ambilSatuPesawat($baris=0){
 		$this->bukaFile();
 
@@ -138,6 +170,45 @@ class M_admin extends CI_Model {
 	}
 
 	/* Jadwal Pesawat */
+	public function cariJadwal($kode_pesawat=null,$tujuan=null,$waktu=null){
+		// Baris dibaca
+		$startRow = 2;
+
+		try{
+            $inputFileType = IOFactory::identify($this->file);
+            $objReader = IOFactory::createReader($inputFileType);
+            $this->objPHPExcel = $objReader->load($this->file);
+        } catch (Exception $ex) {
+            die("Tidak dapat mengakses file ".$ex->getMessage());
+        }
+
+		$sheet = $this->objPHPExcel->getSheet($this->tb_jadwal);
+		$highestRow = $sheet->getHighestRow();
+		$highestColumn = $sheet->getHighestColumn();
+
+		$isiData = array();
+		$index = $startRow;
+
+		for($row = $startRow; $row <= $highestRow; $row++){
+			$rowData = $sheet->rangeToArray('A' . $row . ':' . $highestColumn . $row,NULL,TRUE,FALSE);
+			if(!empty($rowData[0][0])){
+				if($kode_pesawat==$rowData[0][0] && $tujuan==$rowData[0][1] && $waktu==$rowData[0][2]){
+					$isiData[] = array(
+						'index'			=> $index,
+						'kode_pesawat'	=> $rowData[0][0],
+						'tujuan'		=> $rowData[0][1],
+						'waktu'			=> $rowData[0][2],
+						'desk'			=> $rowData[0][3],
+						'keterangan'	=> $rowData[0][4],
+					);
+				}
+			}
+			$index++;
+		}
+
+		return $isiData;
+	}
+
 	public function ambilSatuJadwal($baris=0){
 		$this->bukaFile();
 

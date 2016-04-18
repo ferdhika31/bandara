@@ -49,11 +49,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 </div>
 <script src="<?php echo base_url('assets/admin/js/jquery-1.11.0.min.js');?>" type="text/javascript"></script>
 <script type="text/javascript">
-	setInterval(cek, 1000);
+	// setInterval(cek, 1000);
 
 	// function mundur(){
 	// 	//todo
 	// }
+	cek();
 	function cek(){
 		$.get("<?php echo site_url('welcome/data');?>", function(data){
 			// console.log(data.length);
@@ -66,6 +67,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				$(".isi").prepend("<tr><td colspan='6'>Tidak ada jadwal</td></tr>");
 			}
 		}, "json" );
+
+		setTimeout('cek();','1000');
 	}
 
 	

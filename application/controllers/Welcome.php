@@ -71,9 +71,9 @@ class Welcome extends Main {
 				$interval  = abs($datetime2 - $datetime1);
 				$minutes   = round($interval / 60);
 
-				echo 'Diff. in minutes is: '.$minutes.'<br>'; 
+				// echo 'Diff. in minutes is: '.$minutes.'<br>'; 
 				// $datetime1<=$datetime2 || 
-				if($datetime1<=$datetime2 && $minutes<=30){
+				if($datetime1<=$datetime2 && $minutes<=$this->config->item('jedaJadwal')){
 					// echo $maskapai['nama_maskapai']." - ".$waktu.'-'.$minutes."<br>";
 					$resData[] = array(
 						'kode_pesawat'	=> $kode_pesawat,

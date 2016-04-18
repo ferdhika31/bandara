@@ -39,54 +39,56 @@
 								</div>
 
 								<div class="portlet-body">
-									<div class="table-scrollable">
 
-										<table class="table table-hover">
-											<thead>
-												<tr>
-													<th>No</th>
-													<th>Kode Pesawat</th>
-													<th>Nama Maskapai</th>
-													<!-- <th>Status</th> -->
-													<th>Aksi</th>
-												</tr>
-											</thead>
-											<tbody>
-											<?php 
-
-											$no=1; 
-											$temp = array();  
-											if(!empty($list)):
-												
-												foreach ($list as $pesawat): 
-												$temp[] = array(
-													'index' => $pesawat['index'],
-													'kode' => $pesawat['kode_pesawat'],
-													'nama' => $pesawat['nama_maskapai'],
-												);
-											?>
-											<tr>
-												<td><?=$no;?></td>
-												<td><?=$pesawat['kode_pesawat'];?></td>
-												<td><?=$pesawat['nama_maskapai'];?></td>
-												<!-- <td><?=$pesawat['status'];?></td> -->
-												<td>
-													<a href="<?= site_url('admin/pesawat/ubah/'.$pesawat['index']); ?>" class="btn default btn-xs purple">
-														<i class="fa fa-edit"></i> Ubah 
-													</a>
-													<a data-toggle="modal" href="#hapus<?php echo $pesawat['index'];?>" class="btn default btn-xs red">
-														<i class="fa fa-trash"></i> Hapus 
-													</a>
-												</td>
-											</tr>
-												<?php $no++; endforeach; else: ?>
-											<tr>
-												<td colspan="5">Tidak ada data.</td>
-											</tr>
-											<?php endif; ?>
-											</tbody>
-										</table>
+									<div class="box">
+										<div class="box-body">
+											<table id="example2" class="table table-bordered table-hover">
+												<thead>
+													<tr>
+														<th>No</th>
+														<th>Kode Pesawat</th>
+														<th>Nama Maskapai</th>
+														<!-- <th>Status</th> -->
+														<th>Aksi</th>
+													</tr>
+												</thead>
+												<tbody>
+													<?php 
+													$no=1; 
+													$temp = array();  
+													if(!empty($list)):
+														
+														foreach ($list as $pesawat): 
+														$temp[] = array(
+															'index' => $pesawat['index'],
+															'kode' => $pesawat['kode_pesawat'],
+															'nama' => $pesawat['nama_maskapai'],
+														);
+													?>
+													<tr>
+														<td><?=$no;?></td>
+														<td><?=$pesawat['kode_pesawat'];?></td>
+														<td><?=$pesawat['nama_maskapai'];?></td>
+														<!-- <td><?=$pesawat['status'];?></td> -->
+														<td>
+															<a href="<?= site_url('admin/pesawat/ubah/'.$pesawat['index']); ?>" class="btn default btn-xs purple">
+																<i class="fa fa-edit"></i> Ubah 
+															</a>
+															<a data-toggle="modal" href="#hapus<?php echo $pesawat['index'];?>" class="btn default btn-xs red">
+																<i class="fa fa-trash"></i> Hapus 
+															</a>
+														</td>
+													</tr>
+														<?php $no++; endforeach; else: ?>
+													<tr>
+														<td colspan="5">Tidak ada data.</td>
+													</tr>
+													<?php endif; ?>
+												</tbody>
+											</table>
+										</div>
 									</div>
+									
 									<center>
 										<!-- <a class="btn default green" data-toggle="modal" href="#tambah">
 											Tambah

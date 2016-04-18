@@ -13,22 +13,34 @@ $config = array(
 
 	// Maskapai penerbangan
 	'maskapai'	=> array(
-		"Garuda Indonesia",
-		"Air Asia"
+		"GARUDA INDONESIA",
+		"AIR ASIA",
+		"CITILINK",
+		"SUSI AIR",
+		"EXPRESS AIR",
+		"LION AIR",
+		"WINGS AIR"
 	),
 	// Tujuan penerbangan
 	'tujuan'	=> array(
-		"Bali",
-		"Jakarta",
-		"Surabaya",
-		"Kalimantan",
-		"Papua"
+		"BALI",
+		"JAKARTA",
+		"SURABAYA",
+		"NUSAWIRU",
+		"DENPASAR",
+		"BANJARMASIN",
+		"MEDAN",
+		"YOGYAKARTA",
+		"BATAM",
+		"PONTIANAK"
 	),
 	// Keterangan jadwal
 	'keterangan' => array(
 		"Scheduled",
 		"Estimated"
 	),
+
+	'jedaJadwal'	=> 30,
 
 	'pesanJadwal' 	=> array(
 		'indonesia'		=> "Pesawat %s dengan kode %s akan segera berangkat.",

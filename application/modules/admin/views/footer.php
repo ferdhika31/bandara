@@ -25,6 +25,25 @@
 		<script src="<?php echo base_url('assets/admin/global/scripts/metronic.js');?>" type="text/javascript"></script>
 		<script src="<?php echo base_url('assets/admin/admin/layout/scripts/layout.js');?>" type="text/javascript"></script>
 		<!-- END PAGE LEVEL SCRIPTS -->
+
+		<!-- DataTables -->
+		<script src="<?php echo base_url('assets/admin/plugins/datatables/jquery.dataTables.min.js');?>"></script>
+		<script src="<?php echo base_url('assets/admin/plugins/datatables/dataTables.bootstrap.min.js');?>"></script>
+
+		<!-- page script -->
+		<script>
+			$(function () {
+				$('#example2').DataTable({
+					"paging": true,
+					"lengthChange": false,
+					"searching": true,
+					"ordering": true,
+					"info": true,
+					"autoWidth": false
+				});
+			});
+		</script>
+
 		<script>
 			jQuery(document).ready(function() {    
 				Layout.init(); // init layout

@@ -46,15 +46,38 @@ class Jadwal extends Main{
 			$maskapai = $this->m_main->tampilSatuPesawat($kode_pesawat);
 			// kalo ada data maskapai
 			if($maskapai){
-				$resData[] = array(
-					'index'			=> $res['index'],
-					'kode_pesawat'	=> $kode_pesawat,
-					'nama_maskapai' => $maskapai['nama_maskapai'],
-					'tujuan'		=> $res['tujuan'],
-					'waktu'			=> $res['waktu'],
-					'desk'			=> $res['desk'],
-					'keterangan'	=> $res['keterangan'],
-				);
+				if($this->session->userdata('hak')=='operator'){
+					$waktu = $res['waktu'];
+
+					$datetime1 = strtotime(date("H:i"));
+					$datetime2 = strtotime($waktu);
+
+					$interval  = abs($datetime2 - $datetime1);
+					$minutes   = round($interval / 60);
+
+					if($datetime1<=$datetime2 && $minutes<=$this->config->item('jedaJadwal')){
+						// echo $maskapai['nama_maskapai']." - ".$waktu.'-'.$minutes."<br>";
+						$resData[] = array(
+							'index'			=> $res['index'],
+							'kode_pesawat'	=> $kode_pesawat,
+							'nama_maskapai' => $maskapai['nama_maskapai'],
+							'tujuan'		=> $res['tujuan'],
+							'waktu'			=> $waktu,
+							'desk'			=> $res['desk'],
+							'keterangan'	=> $res['keterangan'],
+						);
+					}
+				}else{
+					$resData[] = array(
+						'index'			=> $res['index'],
+						'kode_pesawat'	=> $kode_pesawat,
+						'nama_maskapai' => $maskapai['nama_maskapai'],
+						'tujuan'		=> $res['tujuan'],
+						'waktu'			=> $res['waktu'],
+						'desk'			=> $res['desk'],
+						'keterangan'	=> $res['keterangan'],
+					);
+				}
 			}
 		}
 
@@ -86,8 +109,15 @@ class Jadwal extends Main{
 			$waktu = $this->input->post('A_waktu');
 			$keterangan = $this->input->post('A_ket');
 
-			$this->m_admin->tambahJadwal(array($pesawat, $tujuan, $waktu, null, $keterangan));
-			$this->session->set_flashdata('message','Berhasil menambahkan jadwal pesawat dengan kode '.$pesawat.' tujuan '.$tujuan.'.');
+			$cek = $this->m_admin->cariJadwal($kode,$tujuan,$waktu);
+
+			if(empty($cek)){
+				$this->m_admin->tambahJadwal(array($pesawat, $tujuan, $waktu, null, $keterangan));
+				$this->session->set_flashdata('message','Berhasil menambahkan jadwal pesawat dengan kode '.$pesawat.' tujuan '.$tujuan.'.');
+			}else{
+				$this->session->set_flashdata('message','Jadwal dengan pesawat '.$pesawat.' tujuan '.$tujuan.' dengan waktu '.$waktu.' sudah ada.');
+			}
+
 			redirect("admin/jadwal");
 		}else{
 			// Pesan validasi
@@ -118,7 +148,7 @@ class Jadwal extends Main{
 			$this->global_data['data'] = $dataJadwal;
 
 			// Validasi
-			$this->form_validation->set_rules('A_pesawat', 'Pesawat', 'required|min_length[4]|max_length[10]');
+			$this->form_validation->set_rules('A_pesawat', 'Pesawat', 'required|min_length[0]|max_length[10]');
 			$this->form_validation->set_rules('A_tujuan', 'Tujuan', 'required|min_length[4]|max_length[20]');
 			$this->form_validation->set_rules('A_waktu', 'Waktu', 'required|min_length[4]|max_length[5]');
 		

@@ -21,6 +21,10 @@ class Admin extends Main{
 		$this->load->model('m_main');
 	}
 
+	public function coba(){
+		var_dump($this->m_admin->cariJadwal('GI009','NUSAWIRU','08:0'));
+	}
+
 	public function index(){
 		// Title & desc
 		$this->global_data['title'] = "Dashboard";
@@ -31,7 +35,23 @@ class Admin extends Main{
 		$this->global_data['listPesawat'] = $this->m_admin->tampilPesawat();
 		$this->global_data['inbox'] = $this->m_admin->ambilPesanBy('inbox',$this->session->userdata('uname'));
 
-		$this->global_data['jadwal'] = $this->m_main->tampilJadwal();
+		$data = $this->m_main->tampilJadwal();
+		$count=0;
+		foreach ($data as $res){
+			$waktu = $res['waktu'];
+
+			$datetime1 = strtotime(date("H:i"));
+			$datetime2 = strtotime($waktu);
+
+			$interval  = abs($datetime2 - $datetime1);
+			$minutes   = round($interval / 60);
+
+			if($datetime1<=$datetime2 && $minutes<=$this->config->item('jedaJadwal')){
+				$count++;
+			}
+		}
+
+		$this->global_data['jadwal'] = ($this->session->userdata('hak')=='operator')?$count:count($data);
 
 		$this->tampilan('dashboard');
 	}
