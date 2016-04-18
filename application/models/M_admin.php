@@ -270,6 +270,18 @@ class M_admin extends CI_Model {
 		$objWriter->save($this->file);
 	}
 
+	public function ubahJadwalKeterangan($ket,$baris){
+		$this->bukaFile();
+
+        $sheet = $this->objPHPExcel->setActiveSheetIndex($this->tb_jadwal);
+        $lastRow = $baris;
+
+		$this->objPHPExcel->getActiveSheet()->setCellValue("E".$lastRow, $ket);
+
+        $objWriter = IOFactory::createWriter($this->objPHPExcel, 'Excel2007');
+		$objWriter->save($this->file);
+	}
+
 	/* Pesan */
 	public function ambilPesanBy($type,$username){
 		$startRow = 2;

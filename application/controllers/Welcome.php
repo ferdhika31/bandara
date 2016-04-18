@@ -23,6 +23,10 @@ class Welcome extends Main {
 	function __construct(){
 		parent::__construct();
 		$this->load->model('m_main');
+
+		$this->output->set_header("Cache-Control: no-store, no-cache, must-revalidate");
+		$this->output->set_header("Cache-Control: post-check=0, pre-check=0");
+		$this->output->set_header("Pragma: no-cache"); 
 	}
 
 	public function index(){

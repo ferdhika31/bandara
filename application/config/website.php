@@ -43,7 +43,7 @@ $config = array(
 	'jedaJadwal'	=> 30,
 
 	'pesanJadwal' 	=> array(
-		'indonesia'		=> "Pesawat %s dengan kode %s akan segera berangkat.",
+		'indonesia'		=> "Perhatian, perhatian. pesawat %s dengan kode %s akan segera berangkat.",
 		'inggris'		=> "%s plane with flight number %s leaving soon."
 	)
 );

@@ -22,7 +22,7 @@ class Admin extends Main{
 	}
 
 	public function coba(){
-		var_dump($this->m_admin->cariJadwal('GI009','NUSAWIRU','08:0'));
+		$this->m_admin->ubahJadwalKeterangan("adw",2);
 	}
 
 	public function index(){

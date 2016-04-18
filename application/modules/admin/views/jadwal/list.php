@@ -40,12 +40,18 @@
 								</div>
 
 								<div class="portlet-body">
+									<?php if($this->session->userdata("hak")=="operator"): ?>
+									<form action="" method="post">
+									<?php endif; ?>
 
 									<div class="box">
 										<div class="box-body">
 											<table id="example2" class="table table-bordered table-hover">
 												<thead>
 													<tr>
+														<?php if($this->session->userdata("hak")=="operator"): ?>
+														<th>#</th>
+														<?php endif; ?>
 														<th>No</th>
 														<th>Kode Pesawat</th>
 														<th>Nama Maskapai</th>
@@ -75,6 +81,11 @@
 														);
 													?>
 													<tr>
+														<?php if($this->session->userdata("hak")=="operator"): ?>
+														<td>
+															<input type="checkbox" name="id[]" value="<?=$jadwal['index'];?>">
+														</td>
+														<?php endif; ?>
 														<td><?=$no;?></td>
 														<td><?=$jadwal['kode_pesawat'];?></td>
 														<td><?=$jadwal['nama_maskapai'];?></td>
@@ -86,12 +97,12 @@
 																<i class="fa fa-edit"></i> Ubah 
 															</a>
 															<?php else:?>
-																<select class="form-control" name="A_ket">
+																<select class="form-control" name="A_ket[]">
 																	<?php
 																		$keterangan = $this->config->item('keterangan');
 																		foreach ($keterangan as $keterangan):
 																	?>
-																	<option value="<?php echo $keterangan;?>" <?php echo (!empty($data['keterangan'])) ? ($keterangan==$data['keterangan']) ? 'selected' : '' : '';?>><?php echo $keterangan;?></option>
+																	<option value="<?php echo $keterangan;?>" <?php echo (!empty($jadwal['keterangan'])) ? ($keterangan==$jadwal['keterangan']) ? 'selected' : '' : '';?>><?php echo $keterangan;?></option>
 																	<?php endforeach;?>
 																</select>
 															<?php endif;?>
@@ -101,8 +112,8 @@
 														</td>
 														<?php if($this->session->userdata("hak")=="operator"): ?>
 														<td>
-															<button class="btn default btn-xs red" onclick='responsiveVoice.speak("<?php echo sprintf($pesan['indonesia'], $jadwal['nama_maskapai'], $jadwal['kode_pesawat']);?>", "Indonesian Female", {volume: 5});'><i class="fa fa-volume-up"></i> ID</button>
-															<button class="btn default btn-xs red" onclick='responsiveVoice.speak("<?php echo sprintf($pesan['inggris'], $jadwal['nama_maskapai'], $jadwal['kode_pesawat']);?>");' ><i class="fa fa-volume-up"></i> EN</button>
+															<a class="btn default btn-xs red" onclick='responsiveVoice.speak("<?php echo sprintf($pesan['indonesia'], $jadwal['nama_maskapai'], $jadwal['kode_pesawat']);?>", "Indonesian Female", {volume: 5});'><i class="fa fa-volume-up"></i> ID</a>
+															<a class="btn default btn-xs red" onclick='responsiveVoice.speak("<?php echo sprintf($pesan['inggris'], $jadwal['nama_maskapai'], $jadwal['kode_pesawat']);?>");' ><i class="fa fa-volume-up"></i> EN</a>
 														</td>
 														<?php endif; ?>
 													</tr>
@@ -122,6 +133,9 @@
 											Tambah
 										</a>
 									</center>
+									<?php else: ?>
+										<input type="submit" class="btn default green" value="Ubah"/>
+										</form>
 									<?php endif;?>
 								</div>
 							</div>

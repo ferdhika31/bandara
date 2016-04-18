@@ -81,6 +81,23 @@ class Jadwal extends Main{
 			}
 		}
 
+		// Cekbox
+		if($this->session->userdata("hak")=="operator"){
+			if($this->input->post()){
+				$cek = $this->input->post("id");
+				$ket = $this->input->post("A_ket");
+
+				($cek==NULL) ? redirect('admin/jadwal') : '';
+				$i=0;
+				foreach($cek as $cek) {
+					// echo $ket[$i]."-".$cek."<br>";
+					$this->m_admin->ubahJadwalKeterangan($ket[$i],$cek);
+					$i++;
+				}
+				// exit();
+			}
+		}
+
 		$this->global_data['list'] = $resData;
 
 		$this->tampilan('jadwal/list');
