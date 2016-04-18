@@ -13,8 +13,10 @@ class M_main extends CI_Model {
 	function __construct(){
 		parent::__construct();
 		// tambah library phpexcel
-		$this->load->library('phpexcel');
-		$this->load->library('PHPExcel/iofactory');
+		// $this->load->library('phpexcel');
+		// $this->load->library('PHPExcel/iofactory');
+		$this->load->file(APPPATH.'libraries/PHPExcel.php'); //full path to
+		$this->load->file(APPPATH.'libraries/PHPExcel/IOFactory.php'); //full path to
 
 		$this->tb_user = 0;
 		$this->tb_pesawat = 1;
