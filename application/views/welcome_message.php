@@ -68,7 +68,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			}
 		}, "json" );
 
-		// setTimeout('cek();','2000');
+		setTimeout('cek();','5000');
 	}
 
 	

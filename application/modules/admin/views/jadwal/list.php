@@ -112,8 +112,8 @@
 														</td>
 														<?php if($this->session->userdata("hak")=="operator"): ?>
 														<td>
-															<a class="btn default btn-xs red" onclick='responsiveVoice.speak("<?php echo sprintf($pesan['indonesia'], $jadwal['nama_maskapai'], $jadwal['kode_pesawat']);?>", "Indonesian Female", {volume: 5});'><i class="fa fa-volume-up"></i> ID</a>
-															<a class="btn default btn-xs red" onclick='responsiveVoice.speak("<?php echo sprintf($pesan['inggris'], $jadwal['nama_maskapai'], $jadwal['kode_pesawat']);?>");' ><i class="fa fa-volume-up"></i> EN</a>
+															<a class="btn default btn-xs red" onclick='responsiveVoice.speak("<?php echo sprintf($pesan['indonesia'], $jadwal['nama_maskapai'], $jadwal['kode_pesawat'], $jadwal['tujuan'], $jadwal['waktu']);?>", "Indonesian Female", {volume: 5});'><i class="fa fa-volume-up"></i> ID</a>
+															<a class="btn default btn-xs red" onclick='responsiveVoice.speak("<?php echo sprintf($pesan['inggris'], $jadwal['nama_maskapai'], $jadwal['kode_pesawat'], $jadwal['tujuan'], $jadwal['waktu']);?>");' ><i class="fa fa-volume-up"></i> EN</a>
 														</td>
 														<?php endif; ?>
 													</tr>

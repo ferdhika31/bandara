@@ -40,10 +40,10 @@ $config = array(
 		"Estimated"
 	),
 
-	'jedaJadwal'	=> 30,
+	'jedaJadwal'	=> 180,
 
 	'pesanJadwal' 	=> array(
-		'indonesia'		=> "Perhatian, perhatian. pesawat %s dengan kode %s akan segera berangkat.",
-		'inggris'		=> "%s plane with flight number %s leaving soon."
+		'indonesia'		=> "Mohon perhatian. maskapai %s dengan kode maskapai %s dengan tujuan %s pada pukul %s akan segera berangkat. kepada para penumpang segera menuju maskapai. terima kasih",
+		'inggris'		=>  "airport announcement. %s  plane with flight number %s with destination %s on the time %s .for the passanger to leaving soon . thank you"
 	)
 );
